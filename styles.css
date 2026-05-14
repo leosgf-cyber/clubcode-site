@@ -1,0 +1,59 @@
+/* club·code — styles complementares ao Tailwind CDN */
+
+:root {
+  --bg: #FAF7F2;
+  --bg-alt: #F2EEE6;
+  --ink: #1A1A1A;
+  --ink-soft: #4A4A4A;
+  --ink-muted: #8A857C;
+  --rule: #E8E2D6;
+  --accent: #FF6B35;
+  --accent-ink: #C44A1F;
+}
+
+html { scroll-behavior: smooth; }
+
+body { font-feature-settings: "ss01", "cv11"; }
+
+/* bullet laranja no wordmark "club·code" */
+.dot {
+  width: 0.55em;
+  height: 0.55em;
+  background-color: var(--accent);
+  border-radius: 9999px;
+  position: relative;
+  top: -0.05em;
+}
+
+.dot-sm {
+  width: 0.5em;
+  height: 0.5em;
+  background-color: var(--accent);
+  border-radius: 9999px;
+  position: relative;
+  top: -0.05em;
+}
+
+/* form: estado de sucesso/erro */
+#form-message[data-tone="success"] { color: var(--accent-ink); }
+#form-message[data-tone="error"]   { color: #B91C1C; }
+
+/* foco visível */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* input autofill — manter paleta */
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-alt) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+/* reduz motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
