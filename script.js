@@ -1,7 +1,7 @@
 (() => {
   // ⚠ TROCAR pelo URL do deploy do Apps Script (Web App).
   // Ver apps-script/Code.gs e o passo "Deploy as Web App" no README.
-  const WEBHOOK_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
+  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby-G35SEAmiZTRv2uAqraPungZFvKWsKTHr_JM8B0_UESs10oDz_d2IZO8S3bLXh0nl/exec';
 
   const form = document.getElementById('interest-form');
   if (!form) return;
