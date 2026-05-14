@@ -56,14 +56,19 @@
         <span class="text-[clamp(3.5rem,14vw,9rem)]">club</span><span class="dot inline-block align-middle mx-1 md:mx-3" aria-hidden="true"></span><span class="text-[clamp(3.5rem,14vw,9rem)]">code</span>
       </h1>
       <p class="mt-10 md:mt-14 max-w-2xl font-display font-medium text-2xl md:text-4xl text-ink leading-tight tracking-tight">
-        vibe coders se encontram. atacam um problema. mostram trabalho. seguem construindo.
+        um lugar para encontrar outros <s class="text-ink-soft decoration-2 decoration-ink-soft/80">nerds</s> <span class="text-accent">vibe coders</span> igual você.
       </p>
       <p class="mt-6 font-mono text-sm text-ink-muted">
-        // presencial · temático · sem competição
+        <span class="cc-prompt"></span>presencial · temático · irado
       </p>
-      <a href="#lista" class="mt-14 inline-block self-start font-mono text-sm text-ink hover:text-accent transition-colors group">
+      <a href="#lista" class="mt-14 inline-flex items-center gap-3 self-start bg-ink text-bg font-mono text-sm px-7 py-4 hover:bg-accent transition-colors group">
         entrar na lista <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
       </a>
+
+      <!-- demo do spinner — me diga onde quer pôr/duplicar/remover -->
+      <div class="mt-12">
+        <span data-cc-spinner></span>
+      </div>
     </section>
 
     <!-- MANIFESTO -->
@@ -126,7 +131,7 @@
     <!-- LISTA DE INTERESSE -->
     <section id="lista" class="py-24 md:py-36 bg-bg-alt border-t border-rule">
       <div class="max-w-xl mx-auto px-6 md:px-10">
-        <p class="font-mono text-sm text-ink-muted">// lista de interesse</p>
+        <p class="font-mono text-sm text-ink-muted"><span class="cc-prompt"></span>lista de interesse</p>
         <h2 class="mt-3 font-display font-bold text-3xl md:text-5xl text-ink lowercase tracking-tight leading-[1.05]">
           entra na lista.
         </h2>
@@ -161,7 +166,10 @@
           <button type="submit" id="submit-btn"
                   class="mt-2 inline-flex items-center gap-3 bg-ink text-bg font-mono text-sm px-7 py-4 hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             <span data-state="idle">entrar na lista <span class="inline-block">→</span></span>
-            <span data-state="loading" class="hidden">mandando...</span>
+            <span data-state="loading" class="hidden">
+              <span id="submit-spin-icon" class="text-accent">⠋</span>
+              <span id="submit-spin-verb">Brewing</span>…
+            </span>
           </button>
 
           <p id="form-message" class="font-mono text-sm hidden" role="status" aria-live="polite"></p>

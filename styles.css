@@ -57,3 +57,50 @@ input:-webkit-autofill {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* prompt de terminal (>_) — uso: <span class="cc-prompt"></span>texto */
+.cc-prompt {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  color: var(--accent);
+  margin-right: 0.4em;
+  font-weight: 500;
+}
+.cc-prompt::before { content: ">"; }
+.cc-prompt::after {
+  content: "_";
+  margin-left: 0.05em;
+  animation: cc-blink 1.05s steps(2, jump-none) infinite;
+}
+@keyframes cc-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-prompt::after { animation: none; opacity: 1; }
+}
+
+/* spinner + verbos rotativos (estilo Claude Code) */
+.cc-spinner {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  user-select: none;
+}
+.cc-spinner__icon {
+  color: var(--accent);
+  display: inline-block;
+  width: 1ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.cc-spinner__verb {
+  transition: opacity 180ms ease;
+}
+.cc-spinner__verb.is-fading {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-spinner__verb { transition: none; }
+}

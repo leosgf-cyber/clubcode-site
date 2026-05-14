@@ -1,6 +1,46 @@
+/* shared spinner constants — usados pelo form (loading state) e pelo cc-spinner */
+const VERBS = [
+  "Accomplishing","Actioning","Actualizing","Architecting","Baking","Beaming","Beboppin'",
+  "Befuddling","Billowing","Blanching","Bloviating","Boogieing","Boondoggling","Booping",
+  "Bootstrapping","Brewing","Bunning","Burrowing","Calculating","Canoodling","Caramelizing",
+  "Cascading","Catapulting","Cerebrating","Channeling","Channelling","Choreographing",
+  "Churning","Clauding","Coalescing","Cogitating","Combobulating","Composing","Computing",
+  "Concocting","Considering","Contemplating","Cooking","Crafting","Creating","Crunching",
+  "Crystallizing","Cultivating","Deciphering","Deliberating","Determining","Dilly-dallying",
+  "Discombobulating","Doing","Doodling","Drizzling","Ebbing","Effecting","Elucidating",
+  "Embellishing","Enchanting","Envisioning","Evaporating","Fermenting","Fiddle-faddling",
+  "Finagling","Flambéing","Flibbertigibbeting","Flowing","Flummoxing","Fluttering","Forging",
+  "Forming","Frolicking","Frosting","Gallivanting","Galloping","Garnishing","Generating",
+  "Gesticulating","Germinating","Gitifying","Grooving","Gusting","Harmonizing","Hashing",
+  "Hatching","Herding","Honking","Hullaballooing","Hyperspacing","Ideating","Imagining",
+  "Improvising","Incubating","Inferring","Infusing","Ionizing","Jitterbugging","Julienning",
+  "Kneading","Leavening","Levitating","Lollygagging","Manifesting","Marinating","Meandering",
+  "Metamorphosing","Misting","Moonwalking","Moseying","Mulling","Mustering","Musing",
+  "Nebulizing","Nesting","Newspapering","Noodling","Nucleating","Orbiting","Orchestrating",
+  "Osmosing","Perambulating","Percolating","Perusing","Philosophising","Photosynthesizing",
+  "Pollinating","Pondering","Pontificating","Pouncing","Precipitating","Prestidigitating",
+  "Processing","Proofing","Propagating","Puttering","Puzzling","Quantumizing","Razzle-dazzling",
+  "Razzmatazzing","Recombobulating","Reticulating","Roosting","Ruminating","Sautéing",
+  "Scampering","Schlepping","Scurrying","Seasoning","Shenaniganing","Shimmying","Simmering",
+  "Skedaddling","Sketching","Slithering","Smooshing","Sock-hopping","Spelunking","Spinning",
+  "Sprouting","Stewing","Sublimating","Swirling","Swooping","Symbioting","Synthesizing",
+  "Tempering","Thinking","Thundering","Tinkering","Tomfoolering","Topsy-turvying",
+  "Transfiguring","Transmuting","Twisting","Undulating","Unfurling","Unravelling","Vibing",
+  "Waddling","Wandering","Warping","Whatchamacalliting","Whirlpooling","Whirring","Whisking",
+  "Wibbling","Working","Wrangling","Zesting","Zigzagging"
+];
+const FRAMES = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+const FRAME_MS = 90;
+const VERB_MS = 2500;
+const REDUCE_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pickVerb = (last) => {
+  let v;
+  do { v = VERBS[Math.floor(Math.random() * VERBS.length)]; } while (v === last);
+  return v;
+};
+
+/* form de inscrição na lista de interesse */
 (() => {
-  // ⚠ TROCAR pelo URL do deploy do Apps Script (Web App).
-  // Ver apps-script/Code.gs e o passo "Deploy as Web App" no README.
   const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby-G35SEAmiZTRv2uAqraPungZFvKWsKTHr_JM8B0_UESs10oDz_d2IZO8S3bLXh0nl/exec';
 
   const form = document.getElementById('interest-form');
@@ -9,6 +49,8 @@
   const submitBtn = document.getElementById('submit-btn');
   const idleSpan = submitBtn.querySelector('[data-state="idle"]');
   const loadingSpan = submitBtn.querySelector('[data-state="loading"]');
+  const submitSpinIcon = document.getElementById('submit-spin-icon');
+  const submitSpinVerb = document.getElementById('submit-spin-verb');
   const message = document.getElementById('form-message');
 
   const setMessage = (text, tone) => {
@@ -23,10 +65,25 @@
     delete message.dataset.tone;
   };
 
+  let spinIntervalId = null;
   const setLoading = (isLoading) => {
     submitBtn.disabled = isLoading;
     idleSpan.classList.toggle('hidden', isLoading);
     loadingSpan.classList.toggle('hidden', !isLoading);
+
+    if (isLoading) {
+      submitSpinVerb.textContent = pickVerb('');
+      let i = 0;
+      submitSpinIcon.textContent = FRAMES[0];
+      if (!REDUCE_MOTION) {
+        spinIntervalId = setInterval(() => {
+          submitSpinIcon.textContent = FRAMES[i = (i + 1) % FRAMES.length];
+        }, FRAME_MS);
+      }
+    } else if (spinIntervalId) {
+      clearInterval(spinIntervalId);
+      spinIntervalId = null;
+    }
   };
 
   const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -99,6 +156,43 @@
       setMessage('algo deu errado. tenta de novo em 1 min?', 'error');
     } finally {
       setLoading(false);
+    }
+  });
+})();
+
+/* spinner + verbos rotativos (Claude Code easter egg)
+   uso: <span data-cc-spinner></span>  em qualquer lugar do html. */
+(() => {
+  document.querySelectorAll('[data-cc-spinner]').forEach((el) => {
+    if (el.dataset.ccSpinnerInited) return;
+    el.dataset.ccSpinnerInited = '1';
+    el.classList.add('cc-spinner');
+
+    const icon = document.createElement('span');
+    icon.className = 'cc-spinner__icon';
+    icon.textContent = FRAMES[0];
+
+    const verb = document.createElement('span');
+    verb.className = 'cc-spinner__verb';
+    let current = pickVerb('');
+    verb.textContent = current;
+
+    const suffix = document.createElement('span');
+    suffix.textContent = '…';
+
+    el.replaceChildren(icon, verb, suffix);
+
+    if (!REDUCE_MOTION) {
+      let i = 0;
+      setInterval(() => { icon.textContent = FRAMES[i = (i + 1) % FRAMES.length]; }, FRAME_MS);
+      setInterval(() => {
+        verb.classList.add('is-fading');
+        setTimeout(() => {
+          current = pickVerb(current);
+          verb.textContent = current;
+          verb.classList.remove('is-fading');
+        }, 180);
+      }, VERB_MS);
     }
   });
 })();
