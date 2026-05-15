@@ -160,15 +160,27 @@ const pickVerb = (last) => {
   });
 })();
 
-/* modo terminal: piscada de 3s a cada 30s, invertendo a paleta inteira */
+/* modo terminal: piscada de 5s a cada 15s + glitch RGB nas transições */
 (() => {
   if (REDUCE_MOTION) return;
   const FLIP_INTERVAL_MS = 15000;
   const FLIP_DURATION_MS = 5000;
-  const flip = () => {
-    document.body.classList.add('cc-terminal');
-    setTimeout(() => document.body.classList.remove('cc-terminal'), FLIP_DURATION_MS);
+  const GLITCH_MS = 360;
+  const SWAP_AT_MS = 110; // troca a paleta no meio do glitch (esconde o cut)
+
+  const body = document.body;
+
+  const glitch = (onSwap) => {
+    body.classList.add('cc-glitch');
+    setTimeout(onSwap, SWAP_AT_MS);
+    setTimeout(() => body.classList.remove('cc-glitch'), GLITCH_MS);
   };
+
+  const flip = () => {
+    glitch(() => body.classList.add('cc-terminal'));
+    setTimeout(() => glitch(() => body.classList.remove('cc-terminal')), FLIP_DURATION_MS);
+  };
+
   setInterval(flip, FLIP_INTERVAL_MS);
 })();
 
