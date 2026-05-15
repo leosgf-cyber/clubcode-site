@@ -12,7 +12,7 @@
   --accent-ink: 196 74 31;
 }
 
-/* modo terminal: piscada periódica de 3s a cada 30s (script.js) */
+/* modo terminal: piscada periódica de 5s a cada 15s (script.js) */
 body.cc-terminal {
   --bg: 8 10 12;
   --bg-alt: 18 20 24;
@@ -22,6 +22,12 @@ body.cc-terminal {
   --rule: 38 42 50;
   --accent: 40 255 122;
   --accent-ink: 25 200 95;
+}
+
+/* tipografia inteira vira mono no modo terminal */
+body.cc-terminal,
+body.cc-terminal * {
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace !important;
 }
 
 html { scroll-behavior: smooth; }

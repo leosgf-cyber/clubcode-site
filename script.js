@@ -163,8 +163,8 @@ const pickVerb = (last) => {
 /* modo terminal: piscada de 3s a cada 30s, invertendo a paleta inteira */
 (() => {
   if (REDUCE_MOTION) return;
-  const FLIP_INTERVAL_MS = 30000;
-  const FLIP_DURATION_MS = 3000;
+  const FLIP_INTERVAL_MS = 15000;
+  const FLIP_DURATION_MS = 5000;
   const flip = () => {
     document.body.classList.add('cc-terminal');
     setTimeout(() => document.body.classList.remove('cc-terminal'), FLIP_DURATION_MS);
