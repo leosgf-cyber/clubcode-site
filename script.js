@@ -32,7 +32,6 @@ const VERBS = [
 const FRAMES = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
 const FRAME_MS = 90;
 const VERB_MS = 2500;
-const REDUCE_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pickVerb = (last) => {
   let v;
   do { v = VERBS[Math.floor(Math.random() * VERBS.length)]; } while (v === last);
@@ -75,11 +74,9 @@ const pickVerb = (last) => {
       submitSpinVerb.textContent = pickVerb('');
       let i = 0;
       submitSpinIcon.textContent = FRAMES[0];
-      if (!REDUCE_MOTION) {
-        spinIntervalId = setInterval(() => {
-          submitSpinIcon.textContent = FRAMES[i = (i + 1) % FRAMES.length];
-        }, FRAME_MS);
-      }
+      spinIntervalId = setInterval(() => {
+        submitSpinIcon.textContent = FRAMES[i = (i + 1) % FRAMES.length];
+      }, FRAME_MS);
     } else if (spinIntervalId) {
       clearInterval(spinIntervalId);
       spinIntervalId = null;
@@ -162,7 +159,6 @@ const pickVerb = (last) => {
 
 /* modo terminal: piscada de 5s a cada 15s + glitch RGB nas transições */
 (() => {
-  if (REDUCE_MOTION) return;
   const FLIP_INTERVAL_MS = 15000;
   const FLIP_DURATION_MS = 5000;
   const GLITCH_MS = 480;
@@ -206,17 +202,15 @@ const pickVerb = (last) => {
 
     el.replaceChildren(icon, verb, suffix);
 
-    if (!REDUCE_MOTION) {
-      let i = 0;
-      setInterval(() => { icon.textContent = FRAMES[i = (i + 1) % FRAMES.length]; }, FRAME_MS);
-      setInterval(() => {
-        verb.classList.add('is-fading');
-        setTimeout(() => {
-          current = pickVerb(current);
-          verb.textContent = current;
-          verb.classList.remove('is-fading');
-        }, 180);
-      }, VERB_MS);
-    }
+    let i = 0;
+    setInterval(() => { icon.textContent = FRAMES[i = (i + 1) % FRAMES.length]; }, FRAME_MS);
+    setInterval(() => {
+      verb.classList.add('is-fading');
+      setTimeout(() => {
+        current = pickVerb(current);
+        verb.textContent = current;
+        verb.classList.remove('is-fading');
+      }, 180);
+    }, VERB_MS);
   });
 })();

@@ -90,11 +90,6 @@ body.cc-glitch::after {
   100% { transform: translateY(3px); opacity: 0.5; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  body.cc-glitch { animation: none; }
-  body.cc-glitch::after { display: none; }
-}
-
 html { scroll-behavior: smooth; }
 
 body { font-feature-settings: "ss01", "cv11"; }
@@ -136,12 +131,6 @@ input:-webkit-autofill {
   transition: background-color 9999s ease-out 0s;
 }
 
-/* reduz motion */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { transition: none !important; }
-}
-
 /* prompt de terminal (>_) — uso: <span class="cc-prompt"></span>texto */
 .cc-prompt {
   font-family: "JetBrains Mono", ui-monospace, monospace;
@@ -157,9 +146,6 @@ input:-webkit-autofill {
 }
 @keyframes cc-blink {
   50% { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cc-prompt::after { animation: none; opacity: 1; }
 }
 
 /* spinner + verbos rotativos (estilo Claude Code) */
@@ -184,7 +170,4 @@ input:-webkit-autofill {
 }
 .cc-spinner__verb.is-fading {
   opacity: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  .cc-spinner__verb { transition: none; }
 }
