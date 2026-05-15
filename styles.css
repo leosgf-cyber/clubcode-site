@@ -30,6 +30,12 @@ body.cc-terminal * {
   font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace !important;
 }
 
+/* exceção: o wordmark 'club·code' do hero mantém Space Grotesk */
+body.cc-terminal #hero h1,
+body.cc-terminal #hero h1 * {
+  font-family: "Space Grotesk", system-ui, sans-serif !important;
+}
+
 html { scroll-behavior: smooth; }
 
 body { font-feature-settings: "ss01", "cv11"; }
