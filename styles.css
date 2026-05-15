@@ -1,14 +1,27 @@
 /* club·code — styles complementares ao Tailwind CDN */
 
+/* paleta como triplets RGB pra suportar Tailwind alpha (/<alpha-value>) */
 :root {
-  --bg: #FAF7F2;
-  --bg-alt: #F2EEE6;
-  --ink: #1A1A1A;
-  --ink-soft: #4A4A4A;
-  --ink-muted: #8A857C;
-  --rule: #E8E2D6;
-  --accent: #FF6B35;
-  --accent-ink: #C44A1F;
+  --bg: 250 247 242;
+  --bg-alt: 242 238 230;
+  --ink: 26 26 26;
+  --ink-soft: 74 74 74;
+  --ink-muted: 138 133 124;
+  --rule: 232 226 214;
+  --accent: 255 107 53;
+  --accent-ink: 196 74 31;
+}
+
+/* modo terminal: piscada periódica de 3s a cada 30s (script.js) */
+body.cc-terminal {
+  --bg: 8 10 12;
+  --bg-alt: 18 20 24;
+  --ink: 235 235 235;
+  --ink-soft: 175 180 185;
+  --ink-muted: 110 115 125;
+  --rule: 38 42 50;
+  --accent: 40 255 122;
+  --accent-ink: 25 200 95;
 }
 
 html { scroll-behavior: smooth; }
@@ -19,7 +32,7 @@ body { font-feature-settings: "ss01", "cv11"; }
 .dot {
   width: 0.55em;
   height: 0.55em;
-  background-color: var(--accent);
+  background-color: rgb(var(--accent));
   border-radius: 9999px;
   position: relative;
   top: -0.05em;
@@ -28,27 +41,27 @@ body { font-feature-settings: "ss01", "cv11"; }
 .dot-sm {
   width: 0.5em;
   height: 0.5em;
-  background-color: var(--accent);
+  background-color: rgb(var(--accent));
   border-radius: 9999px;
   position: relative;
   top: -0.05em;
 }
 
 /* form: estado de sucesso/erro */
-#form-message[data-tone="success"] { color: var(--accent-ink); }
+#form-message[data-tone="success"] { color: rgb(var(--accent-ink)); }
 #form-message[data-tone="error"]   { color: #B91C1C; }
 
 /* foco visível */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid rgb(var(--accent));
   outline-offset: 4px;
   border-radius: 2px;
 }
 
 /* input autofill — manter paleta */
 input:-webkit-autofill {
-  -webkit-text-fill-color: var(--ink);
-  -webkit-box-shadow: 0 0 0 1000px var(--bg-alt) inset;
+  -webkit-text-fill-color: rgb(var(--ink));
+  -webkit-box-shadow: 0 0 0 1000px rgb(var(--bg-alt)) inset;
   transition: background-color 9999s ease-out 0s;
 }
 
@@ -61,7 +74,7 @@ input:-webkit-autofill {
 /* prompt de terminal (>_) — uso: <span class="cc-prompt"></span>texto */
 .cc-prompt {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  color: var(--accent);
+  color: rgb(var(--accent));
   margin-right: 0.4em;
   font-weight: 500;
 }
@@ -85,11 +98,11 @@ input:-webkit-autofill {
   gap: 0.5ch;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.875rem;
-  color: var(--ink-muted);
+  color: rgb(var(--ink-muted));
   user-select: none;
 }
 .cc-spinner__icon {
-  color: var(--accent);
+  color: rgb(var(--accent));
   display: inline-block;
   width: 1ch;
   text-align: center;
