@@ -165,8 +165,8 @@ const pickVerb = (last) => {
   if (REDUCE_MOTION) return;
   const FLIP_INTERVAL_MS = 15000;
   const FLIP_DURATION_MS = 5000;
-  const GLITCH_MS = 360;
-  const SWAP_AT_MS = 110; // troca a paleta no meio do glitch (esconde o cut)
+  const GLITCH_MS = 480;
+  const SWAP_AT_MS = 160; // troca a paleta no meio do glitch (esconde o cut)
 
   const body = document.body;
 
