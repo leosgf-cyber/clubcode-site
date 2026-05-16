@@ -1,12 +1,21 @@
 // club·code — webhook da lista de interesse
 // Atrele este script a uma planilha Google. Deploy como "Web App".
 // Execute as: Me. Who has access: Anyone.
+//
+// REQUER:
+//   Script Property RESEND_API_KEY (Apps Script editor → ⚙️ Project Settings → Script Properties)
+//   Domínio clubcode.com.br verificado no resend.com
+//
+// Email é enviado via Resend HTTP API (UrlFetchApp). Substituiu MailApp por causa de
+// bloqueio do Google ao scope sensível script.send_mail nesta conta.
 
 const SHEET_NAME = 'Lista';
 const HEADERS = ['timestamp', 'nome', 'email', 'consentimento', 'source', 'user_agent'];
-const MAIL_FROM_NAME = 'club·code';
+
+const MAIL_FROM = 'club·code <hello@clubcode.com.br>';
 const MAIL_SUBJECT = 'club·code — tá na lista';
 const SITE_URL = 'https://clubcode.com.br';
+const RESEND_API_URL = 'https://api.resend.com/emails';
 
 function doPost(e) {
   try {
@@ -31,8 +40,7 @@ function doPost(e) {
       userAgent,
     ]);
 
-    // Envio de confirmação. Não-bloqueante: se MailApp falhar (quota, etc),
-    // a inscrição já foi gravada — usuário ainda recebe success no front.
+    // Envio de confirmação. Não-bloqueante.
     try {
       sendConfirmationEmail_(nome, email);
     } catch (mailErr) {
@@ -76,7 +84,11 @@ function jsonOut_(obj) {
 }
 
 function sendConfirmationEmail_(nome, email) {
+  const apiKey = PropertiesService.getScriptProperties().getProperty('RESEND_API_KEY');
+  if (!apiKey) throw new Error('RESEND_API_KEY não configurado em Script Properties');
+
   const firstName = nome.split(' ')[0] || nome;
+
   const plain = [
     'oi ' + firstName + ',',
     '',
@@ -106,13 +118,25 @@ function sendConfirmationEmail_(nome, email) {
       '</div>' +
     '</div>';
 
-  MailApp.sendEmail({
-    to: email,
+  const payload = {
+    from: MAIL_FROM,
+    to: [email],
     subject: MAIL_SUBJECT,
-    body: plain,
-    htmlBody: html,
-    name: MAIL_FROM_NAME,
+    html: html,
+    text: plain,
+  };
+
+  const res = UrlFetchApp.fetch(RESEND_API_URL, {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: 'Bearer ' + apiKey },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
   });
+
+  const code = res.getResponseCode();
+  if (code >= 200 && code < 300) return;
+  throw new Error('resend api ' + code + ': ' + res.getContentText());
 }
 
 function escapeHtml_(s) {
@@ -131,6 +155,7 @@ function setupSheet() {
 }
 
 // Util manual: testa o envio de email pra você (leosgf@gmail.com).
+// Requer RESEND_API_KEY configurada e domínio verificado.
 function testEmail() {
   sendConfirmationEmail_('Leo (teste)', 'leosgf@gmail.com');
   Logger.log('email de teste enviado pra leosgf@gmail.com');
