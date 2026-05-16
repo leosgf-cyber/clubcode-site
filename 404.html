@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>club·code — 404</title>
+  <meta name="description" content="essa página não tá na lista.">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23080A0C'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%2328FF7A'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080A0C;
+      --ink: #EBEBEB;
+      --soft: #ADB1B8;
+      --muted: #6E737D;
+      --accent: #28FF7A;
+      --err: #FF7A8C;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .wordmark {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 56px;
+      display: inline-flex;
+      align-items: center;
+      text-transform: lowercase;
+      text-decoration: none;
+    }
+    .wordmark .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 9999px;
+      margin: 0 4px;
+    }
+    .line { margin: 4px 0; }
+    .prompt { color: var(--accent); }
+    .err { color: var(--err); }
+    .muted { color: var(--muted); }
+    .soft { color: var(--soft); }
+    .big {
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 500;
+      line-height: 1.2;
+      margin: 28px 0 28px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    a.home {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+      transition: border-color 150ms ease;
+    }
+    a.home:hover { border-bottom-color: var(--accent); }
+    .cursor::after {
+      content: "_";
+      margin-left: 4px;
+      animation: blink 1.05s steps(2, jump-none) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    ::selection { background: var(--accent); color: var(--bg); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a href="/" class="wordmark">club<span class="dot" aria-hidden="true"></span>code</a>
+
+    <div class="line"><span class="prompt">&gt;</span> <span>cat /404</span></div>
+    <div class="line err">cat: /404: no such file or directory</div>
+
+    <h1 class="big">essa página não tá na lista.</h1>
+
+    <div class="line soft">talvez ela esteja sendo construída em algum quiosque. ou nunca existiu.</div>
+
+    <div class="line" style="margin-top: 28px;">
+      <span class="prompt">&gt;</span> <a class="home" href="/">cd /</a><span class="cursor"></span>
+    </div>
+  </main>
+</body>
+</html>
