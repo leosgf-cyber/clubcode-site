@@ -1,12 +1,12 @@
 # Club Code — CONTEXT
 
 ## Current Task
-Site institucional **https://clubcode.com.br** no ar (Fase 1 entregue 2026-05-14). Iteração futura: copy/visual + decisões pendentes (logo, primeiro evento).
+Site institucional **https://clubcode.com.br** + email de confirmação automático via Resend. Iteração futura: copy/visual, easter eggs, e decisões pendentes (logo, primeiro evento, canais sociais).
 
 ## Key Decisions
-- **www é primary**, apex redireciona pra www (cert SSL do apex falhou — provavelmente DNSSEC do registro.br atrapalhando Let's Encrypt).
+- **www é primary**, apex redireciona pra www (cert SSL do apex falhava — provavelmente DNSSEC do registro.br atrapalhando Let's Encrypt).
 - **CI/CD via Deploy Hook URL** salvo em `.git/config` (`render.deploy-hook`). GitHub App não conectado → após `git push origin main`, rodar `curl -fsS "$(git config --get render.deploy-hook)"`.
-- Form da lista de interesse → Apps Script bound a planilha "Club Code — Lista de Interesse" → linha em aba `Lista`.
+- **Email confirmação via Resend** (não MailApp — scope `script.send_mail` é bloqueado pela Google nessa conta). Requer GCP project linkado (`105027035835`, projeto `club-code-waitlist`) e API key em Script Properties.
 
 ## Next Steps
 - Logo definitivo (placeholder atual: wordmark `club·code` com bullet laranja).
